@@ -1,0 +1,45 @@
+
+Fn to be added in vfs/request.c
+
+PUBLIC int req_extfrag()
+{
+ int res;
+ message m;
+ m.m_type = REQ_EXTFRAG;
+ res = fs_sendrec(&m);
+ return res; 
+}
+
+vfs/table.c 
+do_extfrag   /* 103 */
+
+vfs/proto.h
+int do_extfrag(void);
+
+mfs/table.c
+fs_extfrag   /* 33 */
+
+mfs/proto.h
+int fs_extfrag(void);
+
+/usr/src/include/minix/callnr.h
+#define EXT_FRAG 103
+
+//wrapper fn - Included with this mail
+int do_grsFragExt()
+{
+  message m;
+
+  return( _syscall(VFS_PROC_NR, EXT_FRAG, &m));
+}
+
+/usr/src/include/minix/vfsif.h
+#define REQ_EXTFRAG	(VFS_BASE + 33)
+#define NREQS 34   // Modify according to ur sys call count 
+
+
+/usr/src
+make includes
+make world 
+
+Reboot !!
